@@ -20,19 +20,21 @@ var populateList = function(countries) {
 
   var getInfo = function() {
     var container = document.querySelector('#country-info');
+    container.innerText = "";
     data.forEach(function(country){
       if (country.name === this.value){
         console.log(country.name);
         var ul = document.createElement('ul');
         ul.innerText = country.name;
-          var population = document.createElement('li');
-          population.innerText = country.population;
-          ul.appendChild(population);
-          var capital = document.createElement('li');
-          capital.innerText = country.capital;
-          ul.appendChild(capital);
-          container.appendChild(ul);
-                
+        var population = document.createElement('li');
+        population.innerText = "Population: " + country.population;
+        ul.appendChild(population);
+        var capital = document.createElement('li');
+        capital.innerText = "Capital city: " + country.capital;
+        ul.appendChild(capital);
+        container.appendChild(ul);
+        
+        localStorage.setItem('country', this.value)
       }
     }.bind(this));
   }
