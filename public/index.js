@@ -18,7 +18,7 @@ var populateList = function(countries) {
     });
   }
 
-  var getInfo = function() {
+  var getCountry = function() {
     var container = document.querySelector('#country-info');
     container.innerText = "";
     data.forEach(function(country){
@@ -37,7 +37,8 @@ var populateList = function(countries) {
         var mapDiv = document.querySelector('#country-map');
         var coords = {lat: country.latlng[0], lng: country.latlng[1]};
         var mainMap = new MapWrapper(mapDiv, coords, 6);
-        
+        mainMap.addMarker(coords);
+
         localStorage.setItem('country', this.value)
       }
     }.bind(this));
@@ -57,7 +58,9 @@ var populateList = function(countries) {
 
       var listOfcountries = document.querySelector('#list-of-countries');
     
-    listOfcountries.onchange = getInfo;
+    listOfcountries.onchange = getCountry;
+
+
 
 
    
