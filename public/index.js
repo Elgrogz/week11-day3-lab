@@ -10,6 +10,8 @@ var makeRequest = function(url, callback) {
 var populateList = function(countries) {
     var select = document.querySelector('#list-of-countries');
 
+    select.innerHTML = "";
+    console.log(countries);
     countries.forEach(function(country) {
       var option = document.createElement('option');
       option.innerText = country.name;
@@ -17,6 +19,23 @@ var populateList = function(countries) {
       select.appendChild(option);
     });
   }
+
+  var selectRegion = function() {
+    var filteredData = data.filter(function (country) {
+      console.log(country.region, this.value);
+      return country.region === this.value;
+    }.bind(this));
+    populateList(filteredData);
+  }
+
+  // var isInRegion = function(country) {
+  //   var region = this.value;
+  //   return country.region = region;
+  // }
+
+  // var whatIsGoingOn = function (countries) {
+  //   var filtered = countries.filter(isInRegion);
+  // }
 
   var getCountry = function() {
     var container = document.querySelector('#country-info');
@@ -26,12 +45,24 @@ var populateList = function(countries) {
         console.log(country.name);
         var ul = document.createElement('ul');
         ul.innerText = country.name;
+
         var population = document.createElement('li');
         population.innerText = "Population: " + country.population;
         ul.appendChild(population);
+
         var capital = document.createElement('li');
         capital.innerText = "Capital city: " + country.capital;
         ul.appendChild(capital);
+
+        var borders = document.createElement('ul');
+        borders.innerText = "Bordering Countries: ";
+        for (border of country.borders) {
+          var country = document.createElement('li');
+          country.innerText = border;
+          borders.appendChild(country);
+        }
+        ul.appendChild(borders);
+
         container.appendChild(ul);
 
         var mapDiv = document.querySelector('#country-map');
@@ -56,14 +87,11 @@ var populateList = function(countries) {
       var url = "https://restcountries.eu/rest/v1/all";
       makeRequest(url, requestComplete);  
 
+      var listOfRegions = document.querySelector('#list-of-regions');
       var listOfcountries = document.querySelector('#list-of-countries');
     
+    listOfRegions.onchange = selectRegion;
     listOfcountries.onchange = getCountry;
-
-
-
-
-   
 
   }
 
