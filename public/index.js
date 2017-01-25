@@ -33,6 +33,10 @@ var populateList = function(countries) {
         capital.innerText = "Capital city: " + country.capital;
         ul.appendChild(capital);
         container.appendChild(ul);
+
+        var mapDiv = document.querySelector('#country-map');
+        var coords = {lat: country.latlng[0], lng: country.latlng[1]};
+        var mainMap = new MapWrapper(mapDiv, coords, 6);
         
         localStorage.setItem('country', this.value)
       }
@@ -54,6 +58,9 @@ var populateList = function(countries) {
       var listOfcountries = document.querySelector('#list-of-countries');
     
     listOfcountries.onchange = getInfo;
+
+
+   
 
   }
 
